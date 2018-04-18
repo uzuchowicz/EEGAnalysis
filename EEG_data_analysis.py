@@ -122,6 +122,12 @@ fct.two_factors_anova(index_data, 'Band', 'Group')
 fct.two_factors_anova(index_data, 'Band', 'Response')
 fct.two_factors_anova(index_data, 'Band', 'Condition')
 fct.three_factors_anova(index_data, 'Band', 'Group', 'Condition')
+fct.two_factors_anova(index_data_MDD, 'Band', 'Condition')
+fct.two_factors_anova(index_data_BP, 'Band', 'Condition')
+fct.three_factors_anova(index_data, 'EEG_channel', 'Group', 'Condition')
+fct.two_factors_anova(index_data_MDD, 'EEG_channel', 'Condition')
+fct.two_factors_anova(index_data_BP, 'EEG_channel', 'Condition')
+
 
 
 
