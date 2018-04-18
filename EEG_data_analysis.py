@@ -16,8 +16,9 @@ import seaborn as sns
 import matplotlib.ticker as mticker
 import scipy
 import pylab
+import functions as fct
 
-filename = 'PSD_data_15epochs.xls'
+filename = 'PSD_data_from_HERMES_data_v0.xls'
 sheetname = 'Sheet1'
 
 path = "data\\"
@@ -107,6 +108,9 @@ index_data_BP = index_data[index_data["Group"] == 2]
 index_data_before = index_data[index_data["Condition"] == 1]
 index_data_after = index_data[index_data["Condition"] == 2]
 
+index_data_nonresponse = index_data[index_data["Response"] == 1]
+index_data_response = index_data[index_data["Response"] == 2]
+
 index_data_nonresponse_MDD = index_data_MDD[index_data["Response"] == 1]
 index_data_response_MDD = index_data_MDD[index_data["Response"] == 2]
 
@@ -114,48 +118,33 @@ index_data_nonresponse_BP = index_data_BP[index_data["Response"] == 1]
 index_data_response_BP = index_data_BP[index_data["Response"] == 2]
 
 ############################################################################################################################################
-
-print('ANOVA:2 czynniki Band*Group')
-
-for name_group in index_data.groupby('Band'):
-    samples = [condition[1] for condition in name_group[1].groupby('Group')['Index']]
-    f_val, p_val = sstats.f_oneway(*samples)
-    print('Band: {}, F value: {:.3f}, p value: {:.3f}'.format(name_group[0], f_val, p_val))
-
-f_val, p_val = sstats.f_oneway(index_data_MDD, index_data_BP)
-
-print("One-way ANOVA P =", p_val)
-
-sns.set(style="whitegrid")
-paper_rc = {'lines.linewidth': 0.5, 'lines.markersize': 7}
-sns.set_context("paper", rc=paper_rc)
-g = sns.factorplot(x="Band", y="Index", hue="Group", data=index_data, fmt='none', ci='sd', dodge=True)
-plt.grid(True,which="both",ls="--",c='gray', color='.3')
-plt.show()
+fct.two_factors_anova(index_data, 'Band', 'Group')
+fct.two_factors_anova(index_data, 'Band', 'Response')
+fct.two_factors_anova(index_data, 'Band', 'Condition')
+fct.three_factors_anova(index_data, 'Band', 'Group', 'Condition')
 
 
-sns.set(style="whitegrid")
-paper_rc = {'lines.linewidth': 0.5, 'lines.markersize': 7}
-sns.set_context("paper", rc=paper_rc)
-sns.set_style("darkgrid")
 
-g = sns.factorplot(x="Band", y="Index", hue="Response", data=index_data, ci='sd', dodge=True)
-plt.grid(True,which="both",ls="-",c='w', color='w')
-plt.show()
 
-sns.set(style="whitegrid")
-paper_rc = {'lines.linewidth': 0.5, 'lines.markersize': 15}
-sns.set_context("paper", rc=paper_rc)
+###########################################################
 
-g = sns.factorplot(x="Band", y="Index", hue="Response", col ="Group", data=index_data, ci='sd', dodge=True)
-plt.grid(True,which="both",ls="--",c='gray', color='.3')
-plt.show()
 
-###############
+
+##############################################################################################################
+###############################CONDITION######################################################################
+
+#  Czy aktywność EEG zmienia się pod wpływem stymulacji (CONDITION) w poszczególnych grupach pacjentów (GROUP) i
+# czy zmiana ta zależy od pasma częstotliwości (BAND) i od topografii (CHANNEL) lub od obu tych zmiennych jednocześnie (BAND x CHANNEL) ?
+# wykonać 3-czynnikową analizę ANOVA dla każdej z czterech grup osobno dla zmiennych CONDITION, BAND i CHANNEL (sporządzić wykresy dla:
+#  CONDITION, CONDITION x BAND, CONDITION x CHANNEL, CONDITION x BAND x CHANNEL).
+
+
+
+##############################################################################################################
 
 # Scatter matrices for different columns
 #plotting.scatter_matrix(PSD_data[['Response', 'Group', 'Band']])
 
-plt.show()
+
 
 
