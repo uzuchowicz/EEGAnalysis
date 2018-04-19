@@ -3,6 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
+
 def two_factors_anova(index_data, factor1, factor2):
 
     print('ANOVA:2 czynniki', factor1, '*', factor2)
@@ -21,8 +22,10 @@ def two_factors_anova(index_data, factor1, factor2):
     paper_rc = {'lines.linewidth': 0.5, 'lines.markersize': 15}
     sns.set_style("darkgrid")
     sns.set_context("paper", rc=paper_rc)
-    sns.factorplot(x=factor1, y="Index", hue=factor2, data=index_data, ci='sd', dodge=True)
+    g = sns.factorplot(x=factor1, y="Index", hue=factor2, data=index_data, ci='sd', dodge=True, title='Degree of PLV for MDD and BP gorup in EEG bands')
+    #sns.plt.set_title('Density of PLV for MDD and BP gorup in EEG bands')
     plt.grid(True, which="both", ls="-", c='w', color='w')
+    plt.title('Degree of PLV for MDD and BP gorup in EEG bands', fontsize=8)
     plt.show()
 
 def three_factors_anova(index_data, factor1, factor2, factor3):
