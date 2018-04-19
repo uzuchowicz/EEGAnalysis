@@ -18,7 +18,7 @@ import scipy
 import pylab
 import functions as fct
 
-filename = 'PLV_degrees_surrogate.xls'
+filename = 'PSD_data_from_HERMES_data_v1.xls'
 sheetname = 'Sheet1'
 
 path = "data\\"
