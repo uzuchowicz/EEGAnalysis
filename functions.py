@@ -1,7 +1,14 @@
 import scipy.stats as sstats
 import seaborn as sns
 import matplotlib.pyplot as plt
+# from statsmodels.stats.multicomp import pairwise_tukeyhsd
+# from statsmodels.stats.multicomp import MultiComparison
+#
+# mc = MultiComparison(data['Score'], data['Archer'])
+# result = mc.tukeyhsd()
 
+# print(result)
+# print(mc.groupsunique)
 
 
 def two_factors_anova(index_data, factor1, factor2):
@@ -22,7 +29,7 @@ def two_factors_anova(index_data, factor1, factor2):
     paper_rc = {'lines.linewidth': 0.5, 'lines.markersize': 15}
     sns.set_style("darkgrid")
     sns.set_context("paper", rc=paper_rc)
-    g = sns.factorplot(x=factor1, y="Index", hue=factor2, data=index_data, ci='sd', dodge=True, title='Degree of PLV for MDD and BP gorup in EEG bands')
+    g = sns.factorplot(x=factor1, y="Index", hue=factor2, data=index_data, ci=95, capsize=.3, dodge=True, title='Degree of PLV for MDD and BP gorup in EEG bands')
     #sns.plt.set_title('Density of PLV for MDD and BP gorup in EEG bands')
     plt.grid(True, which="both", ls="-", c='w', color='w')
     plt.title('Degree of PLV for MDD and BP gorup in EEG bands', fontsize=8)
@@ -52,6 +59,6 @@ def three_factors_anova(index_data, factor1, factor2, factor3):
     paper_rc = {'lines.linewidth': 0.5, 'lines.markersize': 15}
     sns.set_style("darkgrid")
     sns.set_context("paper", rc=paper_rc)
-    sns.factorplot(x=factor1, y="Index", hue=factor3, col=factor2, data=index_data, ci='sd', dodge=True)
+    sns.factorplot(x=factor1, y="Index", hue=factor3, col=factor2, data=index_data, ci=95,capsize=.3, dodge=True)
    # plt.grid(True, which="both", ls="-", c='w', color='w')
     plt.show()

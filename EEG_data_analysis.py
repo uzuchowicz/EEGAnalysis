@@ -8,20 +8,21 @@ import plotly
 from pandas.tools import plotting
 import matplotlib
 import plotly.plotly as py
-plotly.tools.set_credentials_file(username='uzuchowicz', api_key='mkt4BEiLw1kbLYLP5BEf')
+#plotly.tools.set_credentials_file(username='uzuchowicz', api_key='mkt4BEiLw1kbLYLP5BEf')
 from plotly.tools import FigureFactory as FF
 import scipy.stats as sstats
 import matplotlib.pyplot as plt
-import seaborn as sns
+import seaborn as snbs
 import matplotlib.ticker as mticker
 import scipy
 import pylab
 import functions as fct
 
-filename = 'PSD_data_from_HERMES_data_v1.xls'
+
+filename = 'PLV_degrees_surrogate_2s.xls'
 sheetname = 'Sheet1'
 
-path = "data\\"
+path = "data\\Correct\\"
 
 # Read excel data
 # excel_data = pd.ExcelFile(path+filename)
@@ -111,22 +112,43 @@ index_data_after = index_data[index_data["Condition"] == 2]
 index_data_nonresponse = index_data[index_data["Response"] == 1]
 index_data_response = index_data[index_data["Response"] == 2]
 
-index_data_nonresponse_MDD = index_data_MDD[index_data["Response"] == 1]
-index_data_response_MDD = index_data_MDD[index_data["Response"] == 2]
+index_data_response_MDD = index_data[index_data["Group"] == 1]
+index_data_nonresponse_MDD = index_data[index_data["Group"] == 2]
 
-index_data_nonresponse_BP = index_data_BP[index_data["Response"] == 1]
-index_data_response_BP = index_data_BP[index_data["Response"] == 2]
+index_data_nonresponse_BP = index_data[index_data["Response"] == 1]
+index_data_response_BP = index_data[index_data["Response"] == 2]
 
 ############################################################################################################################################
-fct.two_factors_anova(index_data, 'Band', 'Group')
-fct.two_factors_anova(index_data, 'Band', 'Response')
-fct.two_factors_anova(index_data, 'Band', 'Condition')
-fct.three_factors_anova(index_data, 'Band', 'Group', 'Condition')
-fct.two_factors_anova(index_data_MDD, 'Band', 'Condition')
-fct.two_factors_anova(index_data_BP, 'Band', 'Condition')
-fct.three_factors_anova(index_data, 'EEG_channel', 'Group', 'Condition')
-fct.two_factors_anova(index_data_MDD, 'EEG_channel', 'Condition')
-fct.two_factors_anova(index_data_BP, 'EEG_channel', 'Condition')
+
+
+1
+2
+3
+4
+5
+6
+from pyvttbl import DataFrame
+
+df = DataFrame()
+df.read_tbl(datafile)
+df['id'] = xrange(len(df['len']))
+
+print(df.anova('len', sub='id', bfactors=['supp', 'dose']))
+f_val, p_val = sstats.f_oneway(index_data_response_MDD[index_data_response_MDD['Condition'] == 2]["Index"], index_data_response_MDD[index_data_response_MDD['Condition'] == 1]["Index"])
+print("All bands one-way ANOVA P =", p_val)
+
+f_val, p_val = sstats.f_oneway(index_data_nonresponse_MDD[index_data_nonresponse_MDD['Condition'] == 2]["Index"], index_data_nonresponse_MDD[index_data_nonresponse_MDD['Condition'] == 1]["Index"])
+print("All bands one-way ANOVA P =", p_val)
+
+fct.two_factors_anova(index_data, 'Group', 'Condition')
+# fct.two_factors_anova(index_data, 'Band', 'Response')
+# fct.two_factors_anova(index_data, 'Band', 'Condition')
+# fct.three_factors_anova(index_data, 'Band', 'Group', 'Condition')
+# fct.two_factors_anova(index_data_MDD, 'Band', 'Condition')
+# fct.two_factors_anova(index_data_BP, 'Band', 'Condition')
+# fct.three_factors_anova(index_data, 'EEG_channel', 'Group', 'Condition')
+# fct.two_factors_anova(index_data_MDD, 'EEG_channel', 'Condition')
+# fct.two_factors_anova(index_data_BP, 'EEG_channel', 'Condition')
 
 
 
