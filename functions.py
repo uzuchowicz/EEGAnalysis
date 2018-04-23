@@ -1,6 +1,7 @@
 import scipy.stats as sstats
 import seaborn as sns
 import matplotlib.pyplot as plt
+import spm1d as spm
 # from statsmodels.stats.multicomp import pairwise_tukeyhsd
 # from statsmodels.stats.multicomp import MultiComparison
 #
@@ -9,6 +10,35 @@ import matplotlib.pyplot as plt
 
 # print(result)
 # print(mc.groupsunique)
+
+def three_factors_anova_for_groups(group_data, index,factor1, factor2, factor3):
+    FF = spm.stats.anova3(group_data[index], group_data[factor1],
+                          group_data[factor2], group_data[factor3], equal_var=True)
+    FFi = FF.inference(0.05)
+
+    print('Variable:', factor2)
+    FBi = FFi['B']
+    print('____________________________________________________')
+    print(FBi)
+    print("\n")
+
+    FABi = FFi['AB']
+    print('Variables:', factor1, '*', factor2)
+    print('____________________________________________________')
+    print(FABi)
+    print("\n")
+
+    FACi = FFi['AC']
+    print('Variables:', factor1, '*', factor2)
+    print('____________________________________________________')
+    print(FACi)
+    print("\n")
+
+    FABCi = FFi['ABC']
+    print('Variables:', factor1, '*', factor2, '*', factor3)
+    print('____________________________________________________')
+    print(FABCi)
+    print("\n")
 
 
 def two_factors_anova(index_data, factor1, factor2):
