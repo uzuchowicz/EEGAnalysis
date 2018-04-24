@@ -17,6 +17,7 @@ import matplotlib.ticker as mticker
 import scipy
 import pylab
 import functions as fct
+import plotting as plot
 
 
 filename = 'PLV_degrees_surrogate_2s.xls'
@@ -142,34 +143,15 @@ index_data_response_BP = index_data[index_data["Response"] == 2]
 # fct.three_factors_anova(index_data, 'EEG_channel', 'Group', 'Condition')
 # fct.two_factors_anova(index_data_MDD, 'EEG_channel', 'Condition')
 # fct.two_factors_anova(index_data_BP, 'EEG_channel', 'Condition')
-import seaborn as sns
-import matplotlib.pyplot as plt
+
 import spm1d as spm
 
-sns.set(style="whitegrid")
-paper_rc = {'lines.linewidth': 0.5, 'lines.markersize': 15}
-sns.set_style("darkgrid")
-sns.set_context("paper", rc=paper_rc)
-fig=sns.factorplot(x='Condition', y="Index", data=index_data_nonresponse_MDD, ci=95,capsize=.3, dodge=True)
-fig.set_titles('lalala')
-fig.set_axis_labels("", "PLV degree")
-fig.set_xticklabels(["Before", "After"])
-fig.set_titles(row_template=["MDD-response","MDD-nonresponse","BP-response","BP-nonresponse"])
-
-plt.grid(True, which="both", ls="-", c='w', color='w')
-plt.title('Degree of PLV for MDD-nonresponse group before and after sessions', fontsize=10)
-plt.show()
 
 
-sns.set(style="whitegrid")
-paper_rc = {'lines.linewidth': 0.5, 'lines.markersize': 15}
-sns.set_style("darkgrid")
-sns.set_context("paper", rc=paper_rc)
-sns.factorplot(x='Band', y="Index", hue='Condition', data=index_data_response_MDD, ci=95,capsize=.3, dodge=True)
-plt.grid(True, which="both", ls="-", c='w', color='w')
-plt.title('Degree of PLV for MDD-response in all bands before and after sessions', fontsize=8)
-   # plt.grid(True, which="both", ls="-", c='w', color='w')
-plt.show()
+
+plot.two_way_plot(index_data_response_MDD)
+
+
 # FF = spm.stats.anova3(index_data_response_MDD["Index"], index_data_response_MDD["Band"], index_data_response_MDD["Condition"], index_data_response_MDD["EEG_channel"], equal_var=True)
 #
 # print(FF)
@@ -186,7 +168,7 @@ plt.show()
 # FABCi = FFi['ABC']
 # print(FABCi)
 
-fct.three_factors_anova_for_groups(index_data_response_MDD,'Index', 'Band', 'Condition', 'EEG_channel')
+#fct.three_factors_anova_for_groups(index_data_response_MDD,'Index', 'Band', 'Condition', 'EEG_channel')
 
 ###########################################################
 

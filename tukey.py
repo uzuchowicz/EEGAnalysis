@@ -23,8 +23,8 @@ index_data_response = index_data[index_data["Response"] == 2]
 index_data_response_MDD = index_data[index_data["Group"] == 1]
 index_data_nonresponse_MDD = index_data[index_data["Group"] == 2]
 
-index_data_nonresponse_BP = index_data[index_data["Response"] == 1]
-index_data_response_BP = index_data[index_data["Response"] == 2]
+index_data_nonresponse_BP = index_data[index_data["Group"] == 4]
+index_data_response_BP = index_data[index_data["Group"] == 3]
 
 def perform_post_hoc_tukey(data, factor1, factor2, factor3, factor2_idx):
     for factor2_idx in range(len(factor2_idx)):
@@ -36,8 +36,18 @@ def perform_post_hoc_tukey(data, factor1, factor2, factor3, factor2_idx):
         print(mc.groupsunique)
     
     
-    
-perform_post_hoc_tukey(index_data_response_MDD, 'Index', 'Band', 'Condition',[1,2,3,4,5])  
+print('Group 1 -Response MDD')
+print('######################################')    
+perform_post_hoc_tukey(index_data_response_MDD, 'Index', 'Band', 'Condition',[1,2,3,4,5]) 
+print('Group 2 -Nonesponse MDD')
+print('######################################')     
+perform_post_hoc_tukey(index_data_nonresponse_MDD, 'Index', 'Band', 'Condition',[1,2,3,4,5])
+print('Group 3 -Response BP')
+print('######################################')    
+perform_post_hoc_tukey(index_data_response_BP, 'Index', 'Band', 'Condition',[1,2,3,4,5])
+print('Group 4 -Nonresponse BP')
+print('######################################')    
+perform_post_hoc_tukey(index_data_nonresponse_BP, 'Index', 'Band', 'Condition',[1,2,3,4,5])
 #mc = MultiComparison(index_data_response_MDD[index_data_response_MDD["Band"] == 1]['Index'], index_data_response_MDD[index_data_response_MDD["Band"] == 1]['Condition'])
 #result = mc.tukeyhsd()
 #
