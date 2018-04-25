@@ -12,7 +12,7 @@ import plotly.plotly as py
 from plotly.tools import FigureFactory as FF
 import scipy.stats as sstats
 import matplotlib.pyplot as plt
-import seaborn as snbs
+import seaborn as sns
 import matplotlib.ticker as mticker
 import scipy
 import pylab
@@ -104,8 +104,8 @@ index_mean_response = index_data.groupby('Response')
 
 index_mean_bands = index_data.groupby('Band')
 
-index_data_MDD = index_data[index_data["Group"] == 1]
-index_data_BP = index_data[index_data["Group"] == 2]
+index_data_MDD = index_data[index_data["Disease"] == 1]
+index_data_BP = index_data[index_data["Disease"] == 2]
 
 index_data_before = index_data[index_data["Condition"] == 1]
 index_data_after = index_data[index_data["Condition"] == 2]
@@ -149,7 +149,21 @@ import spm1d as spm
 
 
 
-plot.two_way_plot(index_data_response_MDD)
+plot.two_way_plot(index_data_response_MDD, 'Band', 'Condition')
+plot.three_way_plot(index_data_MDD, 'Band', 'Condition', 'Group')
+
+sns.set(style="whitegrid")
+paper_rc = {'lines.linewidth': 0.5, 'lines.markersize': 15}
+sns.set_style("darkgrid")
+sns.set_context("paper", rc=paper_rc)
+g = sns.factorplot(x='Band', y="Index", hue='Condition', col='Group', data=index_data_MDD, ci=95,capsize=.3, dodge=True)
+plt.grid(True, which="both", ls="-", c='w', color='w')
+plt.title('Degree of PLV for MDD-response in all bands before and after sessions', fontsize=8)
+g.set_titles(row_template=["MDD-response","MDD-nonresponse","BP-response","BP-nonresponse"])
+plt.grid(True, which="both", ls="-", c='w', color='w')
+plt.show()
+#
+sns.set(style="whitegrid")
 
 
 # FF = spm.stats.anova3(index_data_response_MDD["Index"], index_data_response_MDD["Band"], index_data_response_MDD["Condition"], index_data_response_MDD["EEG_channel"], equal_var=True)
